@@ -6,3 +6,4 @@
 - <b> Add Note UI
   - <b> Add noteView
     - Add AppBar
+    - Add List of Notes
