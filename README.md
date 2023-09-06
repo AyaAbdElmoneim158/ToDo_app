@@ -8,3 +8,4 @@
     - Add AppBar
     - Add List of Notes
     - Add BottomSheet
+  - <b> Add EditNoteView
