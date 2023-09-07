@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:todo_app/cubits/add_notes/add_notes_cubit.dart';
 import 'package:todo_app/cubits/add_notes/add_notes_state.dart';
@@ -19,21 +18,23 @@ class BottomSheetBuilder extends StatelessWidget {
           listener: (context, state) {
             if (state is AddNotesSuccess) {
               debugPrint("AddNotesSuccess");
-              Navigator.pop(context); //! message
+
               final snackBar = customSnackBar(
                   contentType: ContentType.success,
-                  title: "Add Note Successful");
+                  description: "Add Note Successful");
 
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
                 ..showSnackBar(snackBar);
               BlocProvider.of<NotesCubit>(context).fetchNotes();
+              Navigator.pop(context);
             }
             if (state is AddNotesFailure) {
               debugPrint("AddNotesFailure");
               Navigator.pop(context); //! message
               final snackBar = customSnackBar(
-                  contentType: ContentType.failure, title: "Add Note failure");
+                  contentType: ContentType.failure,
+                  description: "Add Note failure");
 
               ScaffoldMessenger.of(context)
                 ..hideCurrentSnackBar()
@@ -41,9 +42,10 @@ class BottomSheetBuilder extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            return ModalProgressHUD(
-                inAsyncCall: state is AddNotesLoading ? true : false,
-                child: const FormBottomSheet());
+            return AbsorbPointer(
+              absorbing: state is AddNotesLoading ? true : false,
+              child: const FormBottomSheet(),
+            );
           },
         ));
   }

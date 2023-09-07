@@ -12,3 +12,4 @@
 - <b> Add Logic
   - <b> Add Model to notes + init hive
   - <b> Add form validation + init bloc AddNotes/ notes_cubit/notes_cubit
+- <b> Edit issues

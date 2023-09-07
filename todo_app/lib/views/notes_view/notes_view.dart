@@ -37,10 +37,10 @@ class _NotesViewState extends State<NotesView> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
+            isScrollControlled: true,
             context: context,
             enableDrag: false,
             elevation: 0,
-            // backgroundColor: Colors.b,
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.only(
               topLeft: Radius.circular(16),
