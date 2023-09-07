@@ -9,3 +9,5 @@
     - Add List of Notes
     - Add BottomSheet
   - <b> Add EditNoteView
+- <b> Add Logic
+  - <b> Add Model to notes + init hive
