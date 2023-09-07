@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo_app/cubits/notes_cubit/notes_cubit.dart';
+import 'package:todo_app/models/note_model.dart';
 import 'package:todo_app/util/style.dart';
 import 'package:todo_app/views/edit_view/edit_view.dart';
 
 class NoteItem extends StatelessWidget {
-  const NoteItem({
-    super.key,
-  });
+  const NoteItem({super.key, required this.note});
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
+    //ToDo:.......... He use ListTitle
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -17,7 +20,7 @@ class NoteItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
-          color: const Color(0xffFFCC80),
+          color: Color(note.color),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -29,18 +32,23 @@ class NoteItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Notes1",
+                    note.title,
                     style: AppTextStyle.styleNoteTitle(context),
                   ),
-                  const Icon(
-                    Icons.delete,
-                    color: Colors.black,
-                  )
+                  IconButton(
+                      onPressed: () {
+                        note.delete();
+                        BlocProvider.of<NotesCubit>(context).fetchNotes();
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        color: Colors.black,
+                      ))
                 ],
               ),
               const SizedBox(height: 8),
               Text(
-                "Des....Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                note.subTitle,
                 style: AppTextStyle.styleNoteDes(context),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -50,7 +58,7 @@ class NoteItem extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                "May 2014",
+                note.date,
                 style: AppTextStyle.styleNoteDate(context),
               ),
             )
